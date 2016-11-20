@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">أسعار العملات</string>
+    <string name="bankName">البنك</string>
+    <string name="buy">شراء</string>
+    <string name="contact_us1">صُنع بـ</string>
+    <string name="contact_us2">محمد وائل</string>
+    <string name="sell">بيع</string>
+    <string name="about_author">عنا</string>
+</resources>

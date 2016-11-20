@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Currency Rates</string>
+    <string name="realtime_currency_rates" translatable="false">REALTIME CURRENCY RATES</string>
+    <string name="simple_elegant_and_realtime" translatable="false">SIMPLE, ELEGANT &amp; REALTIME</string>
+
+    <string name="contact_us1">Made with </string>
+    <string name="bankName">Bank</string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+    <string name="contact_us2">by Mohamed Wael</string>
+    <string name="contact_us3" translatable="false">IMohamedWael@OutLook.com </string>
+    <string name="about_author">About Author</string>
+</resources>

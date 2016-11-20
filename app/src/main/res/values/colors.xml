@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="mainColor">#F05F40</color>
+    <color name="mainColor2">#FA6446</color>
+    <color name="white">#FFFFFF</color>
+    <color name="color_link">#5E8CC0</color>
+
+    <color name="colorTwitter">#00ACEE</color>
+    <color name="colorGitHub">#333333</color>
+    <color name="colorLinkedIn">#1B86BC</color>
+
+    <color name="colorYellow">#ffff00</color>
+    <color name="color_made_with_love">#767676</color>
+</resources>
+

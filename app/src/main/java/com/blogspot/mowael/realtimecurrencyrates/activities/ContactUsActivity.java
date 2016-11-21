@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,7 @@ import com.blogspot.mowael.realtimecurrencyrates.R;
 public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton ibGitHub, ibLinkedIn, ibTwitter;
-    Intent webIntent;
+    Intent webIntent, browserIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +26,7 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
         ibGitHub = (ImageButton) findViewById(R.id.ibGitHub);
         ibLinkedIn = (ImageButton) findViewById(R.id.ibLinkedIn);
         ibTwitter = (ImageButton) findViewById(R.id.ibTwitter);
-        webIntent = new Intent(ContactUsActivity.this, WebActivity.class);
-
+//        webIntent = new Intent(ContactUsActivity.this, WebActivity.class);
         ibGitHub.setOnClickListener(this);
         ibLinkedIn.setOnClickListener(this);
         ibTwitter.setOnClickListener(this);
@@ -39,8 +39,8 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             case R.id.ibTwitter:
                 if (isConnectingToInternet(this)) {
                     String twitterLink = "https://mobile.twitter.com/iMohamedWael";
-                    webIntent.putExtra("link", twitterLink);
-                    startActivity(webIntent);
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterLink));
+                    startActivity(browserIntent);
                 } else {
                     Toast.makeText(this, "please! check the internet connection", Toast.LENGTH_SHORT).show();
                 }
@@ -48,8 +48,8 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             case R.id.ibLinkedIn:
                 if (isConnectingToInternet(this)) {
                     String linkedInLink = "https://eg.linkedin.com/in/mohamedwael";
-                    webIntent.putExtra("link", linkedInLink);
-                    startActivity(webIntent);
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedInLink));
+                    startActivity(browserIntent);
                 } else {
                     Toast.makeText(this, "please! check the internet connection", Toast.LENGTH_SHORT).show();
                 }
@@ -57,8 +57,8 @@ public class ContactUsActivity extends AppCompatActivity implements View.OnClick
             case R.id.ibGitHub:
                 if (isConnectingToInternet(this)) {
                     String gitHubLink = "https://github.com/MohamedWael";
-                    webIntent.putExtra("link", gitHubLink);
-                    startActivity(webIntent);
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(gitHubLink));
+                    startActivity(browserIntent);
                 } else {
                     Toast.makeText(this, "please! check the internet connection", Toast.LENGTH_SHORT).show();
                 }

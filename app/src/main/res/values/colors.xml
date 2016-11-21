@@ -15,5 +15,13 @@
 
     <color name="colorYellow">#ffff00</color>
     <color name="color_made_with_love">#767676</color>
+
+
+    <color name="colorOne">#FA6446</color>
+    <color name="colorTwo">#E65100</color>
+    <color name="colorThree">#FFBB00</color>
+
+
+
 </resources>
 

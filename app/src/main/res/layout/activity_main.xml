@@ -36,7 +36,6 @@
             android:gravity="center"
             android:text="@string/simple_elegant_and_realtime" />
 
-
         <include
             android:id="@+id/iUsd"
             layout="@layout/content_usd"
@@ -70,6 +69,7 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/iGbp"
             android:layout_marginTop="10dp" />
+
 
     </RelativeLayout>
 </ScrollView>

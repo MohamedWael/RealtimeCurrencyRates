@@ -7,15 +7,19 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bhargavms.dotloader.DotLoader;
 import com.blogspot.mowael.realtimecurrencyrates.R;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.DialogAdapter;
+import com.blogspot.mowael.realtimecurrencyrates.adapters.DotLoadlerDialogAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentEURAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentGBPAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentUSDAdapter;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private RVContentEURAdapter eurAdapter;
     private RVContentGBPAdapter gbpAdapter;
     private RVContentUSDAdapter usdAdapter;
+    private DialogPlus dotLoaderDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,31 +65,38 @@ public class MainActivity extends AppCompatActivity {
             final Request request = new Request.Builder().url("https://api.curates.club/").build();
             new AsyncTask<String, Void, ArrayList<CurrencyModel>>() {
 
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    DotLoadlerDialogAdapter dotLoaderAdapter = new DotLoadlerDialogAdapter(MainActivity.this);
+                    dotLoaderDialog = DialogPlus.newDialog(MainActivity.this)
+                            .setAdapter(dotLoaderAdapter).setExpanded(false).setGravity(Gravity.CENTER)  // This will enable the expand feature, (similar to android L share dialog)
+                            .create();
+                    dotLoaderDialog.show();
+                }
 
                 @Override
                 protected ArrayList<CurrencyModel> doInBackground(String... strings) {
                     try {
                         Response response = client.newCall(request).execute();
                         String jsonResponse = response.body().string();
-                        try {
-                            JSONObject jsonObject = new JSONObject(jsonResponse);
-                            for (int i = 0; i < jsonObject.names().length(); i++) {
-                                String bankNamk = jsonObject.names().get(i).toString();
-                                JSONObject bankCurrencyRate = jsonObject.getJSONObject(bankNamk).getJSONObject("currency_rate");
-                                CurrencyModel currencyModel = new CurrencyModel(bankNamk.toUpperCase(), jsonObject.getJSONObject(bankNamk).get("ref").toString(), jsonObject.getJSONObject(bankNamk).get("title").toString(),
-                                        bankCurrencyRate.getJSONObject("eur").getDouble("sell"), bankCurrencyRate.getJSONObject("eur").getDouble("buy"),
-                                        bankCurrencyRate.getJSONObject("gbp").getDouble("sell"), bankCurrencyRate.getJSONObject("gbp").getDouble("buy"),
-                                        bankCurrencyRate.getJSONObject("usd").getDouble("sell"), bankCurrencyRate.getJSONObject("usd").getDouble("buy"));
-                                currencyList.add(currencyModel);
-                            }
-
-                            Log.d("response", jsonResponse);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        JSONObject jsonObject = new JSONObject(jsonResponse);
+                        for (int i = 0; i < jsonObject.names().length(); i++) {
+                            String bankNamk = jsonObject.names().get(i).toString();
+                            JSONObject bankCurrencyRate = jsonObject.getJSONObject(bankNamk).getJSONObject("currency_rate");
+                            CurrencyModel currencyModel = new CurrencyModel(bankNamk.toUpperCase(), jsonObject.getJSONObject(bankNamk).get("ref").toString(), jsonObject.getJSONObject(bankNamk).get("title").toString(),
+                                    bankCurrencyRate.getJSONObject("eur").getDouble("sell"), bankCurrencyRate.getJSONObject("eur").getDouble("buy"),
+                                    bankCurrencyRate.getJSONObject("gbp").getDouble("sell"), bankCurrencyRate.getJSONObject("gbp").getDouble("buy"),
+                                    bankCurrencyRate.getJSONObject("usd").getDouble("sell"), bankCurrencyRate.getJSONObject("usd").getDouble("buy"));
+                            currencyList.add(currencyModel);
                         }
+
+                        Log.d("response", jsonResponse);
 
 
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     return currencyList;
@@ -93,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(ArrayList<CurrencyModel> currencyModels) {
                     super.onPostExecute(currencyModels);
+                    dotLoaderDialog.dismiss();
                     eurAdapter = new RVContentEURAdapter(MainActivity.this, currencyList);
                     gbpAdapter = new RVContentGBPAdapter(MainActivity.this, currencyList);
                     usdAdapter = new RVContentUSDAdapter(MainActivity.this, currencyList);

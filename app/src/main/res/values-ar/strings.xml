@@ -7,4 +7,8 @@
     <string name="contact_us2">محمد وائل</string>
     <string name="sell">بيع</string>
     <string name="about_author">عنا</string>
+    <string name="sar">الريال السعودي</string>
+    <string name="gbp">الجنيه الإسترلينى</string>
+    <string name="usd">الدولار الأمريكي</string>
+    <string name="eur">اليورو</string>
 </resources>

@@ -29,10 +29,24 @@ public class CurrencyModel  {
     private double usdBuy;
 
 
+    public double getSarBuy() {
+        return sarBuy;
+    }
+
+    public void setSarBuy(double sarBuy) {
+        this.sarBuy = sarBuy;
+    }
+
+    private double sarSell;
+
+    private double sarBuy;
+
+
     public CurrencyModel(String bankName, String ref, String title,
                          double eurSell, double eurBuy,
                          double gbpSell, double gbpBuy,
-                         double usdSell, double usdBuy) {
+                         double usdSell, double usdBuy,
+                         double sarSell, double sarBuy) {
         this.bankName = bankName;
         this.ref = ref;
         this.title = title;
@@ -42,6 +56,8 @@ public class CurrencyModel  {
         this.gbpBuy = gbpBuy;
         this.usdSell = usdSell;
         this.usdBuy = usdBuy;
+        this.sarSell = sarSell;
+        this.sarBuy = sarBuy;
     }
 
     public String getBankName() {
@@ -115,5 +131,14 @@ public class CurrencyModel  {
     public void setUsdBuy(double usdBuy) {
         this.usdBuy = usdBuy;
     }
+
+    public double getSarSell() {
+        return sarSell;
+    }
+
+    public void setSarSell(double sarSell) {
+        this.sarSell = sarSell;
+    }
+
 
 }

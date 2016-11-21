@@ -10,4 +10,8 @@
     <string name="contact_us2">by Mohamed Wael</string>
     <string name="contact_us3" translatable="false">IMohamedWael@OutLook.com </string>
     <string name="about_author">About Author</string>
+    <string name="sar">SAR</string>
+    <string name="eur">EUR</string>
+    <string name="gbp">GBP</string>
+    <string name="usd">USD</string>
 </resources>

@@ -22,6 +22,7 @@ import com.blogspot.mowael.realtimecurrencyrates.adapters.DialogAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.DotLoadlerDialogAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentEURAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentGBPAdapter;
+import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentSARAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentUSDAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.models.CurrencyModel;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private RVContentEURAdapter eurAdapter;
     private RVContentGBPAdapter gbpAdapter;
     private RVContentUSDAdapter usdAdapter;
+    private RVContentSARAdapter sarAdapter;
     private DialogPlus dotLoaderDialog;
+    private RecyclerView rvBankSARDetailes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
         rvBankEURDetailes = (RecyclerView) findViewById(R.id.rvBankEURDetailes);
         rvBankGBPDetailes = (RecyclerView) findViewById(R.id.rvBankGBPDetailes);
         rvBankUSDDetailes = (RecyclerView) findViewById(R.id.rvBankUSDDetailes);
+        rvBankSARDetailes = (RecyclerView) findViewById(R.id.rvBankSARDetailes);
         rvBankEURDetailes.setLayoutManager(new LinearLayoutManager(this));
         rvBankGBPDetailes.setLayoutManager(new LinearLayoutManager(this));
         rvBankUSDDetailes.setLayoutManager(new LinearLayoutManager(this));
+        rvBankSARDetailes.setLayoutManager(new LinearLayoutManager(this));
         btnAuthor = (Button) findViewById(R.id.tvAuthor);
 
         if (isConnectingToInternet(this)) {
@@ -87,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
                             CurrencyModel currencyModel = new CurrencyModel(bankNamk.toUpperCase(), jsonObject.getJSONObject(bankNamk).get("ref").toString(), jsonObject.getJSONObject(bankNamk).get("title").toString(),
                                     bankCurrencyRate.getJSONObject("eur").getDouble("sell"), bankCurrencyRate.getJSONObject("eur").getDouble("buy"),
                                     bankCurrencyRate.getJSONObject("gbp").getDouble("sell"), bankCurrencyRate.getJSONObject("gbp").getDouble("buy"),
-                                    bankCurrencyRate.getJSONObject("usd").getDouble("sell"), bankCurrencyRate.getJSONObject("usd").getDouble("buy"));
+                                    bankCurrencyRate.getJSONObject("usd").getDouble("sell"), bankCurrencyRate.getJSONObject("usd").getDouble("buy"),
+                                    bankCurrencyRate.getJSONObject("sar").getDouble("sell"), bankCurrencyRate.getJSONObject("sar").getDouble("buy"));
                             currencyList.add(currencyModel);
                         }
 
@@ -109,9 +115,12 @@ public class MainActivity extends AppCompatActivity {
                     eurAdapter = new RVContentEURAdapter(MainActivity.this, currencyList);
                     gbpAdapter = new RVContentGBPAdapter(MainActivity.this, currencyList);
                     usdAdapter = new RVContentUSDAdapter(MainActivity.this, currencyList);
+                    sarAdapter = new RVContentSARAdapter(MainActivity.this, currencyList);
                     rvBankEURDetailes.setAdapter(eurAdapter);
                     rvBankGBPDetailes.setAdapter(gbpAdapter);
                     rvBankUSDDetailes.setAdapter(usdAdapter);
+                    rvBankSARDetailes.setAdapter(sarAdapter);
+
 
                 }
             }.execute("");
@@ -148,3 +157,4 @@ public class MainActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
+

@@ -60,6 +60,14 @@
             android:layout_below="@+id/iEur"
             android:layout_marginTop="20dp" />
 
+        <include
+            android:id="@+id/iSar"
+            layout="@layout/content_sar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iGbp"
+            android:layout_marginTop="20dp" />
+
 
         <include
             android:id="@+id/i_buttom_links_layout"
@@ -67,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/iGbp"
+            android:layout_below="@+id/iSar"
             android:layout_marginTop="10dp" />
 
 

@@ -38,11 +38,19 @@
 
 
         <include
+            android:id="@+id/iUsd"
+            layout="@layout/content_usd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSubTitle"
+            android:layout_marginTop="20dp" />
+
+        <include
             android:id="@+id/iEur"
             layout="@layout/content_eur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSubTitle"
+            android:layout_below="@+id/iUsd"
             android:layout_marginTop="20dp" />
 
         <include
@@ -53,13 +61,6 @@
             android:layout_below="@+id/iEur"
             android:layout_marginTop="20dp" />
 
-        <include
-            android:id="@+id/iUsd"
-            layout="@layout/content_usd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iGbp"
-            android:layout_marginTop="20dp" />
 
         <include
             android:id="@+id/i_buttom_links_layout"
@@ -67,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/iUsd"
+            android:layout_below="@+id/iGbp"
             android:layout_marginTop="10dp" />
 
     </RelativeLayout>

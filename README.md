@@ -11,3 +11,4 @@ Dependances I've used in the App :
 * [OkHttp] (http://square.github.io/okhttp/)
 * [DialogPlus] (https://github.com/orhanobut/dialogplus)
 * [Flowing Gradient Library] (https://github.com/dynamitechetan/Flowing-Gradient)
+* [DotLoader](https://github.com/bhargavms/DotLoader)

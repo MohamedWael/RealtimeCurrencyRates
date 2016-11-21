@@ -25,13 +25,13 @@ import java.util.ArrayList;
 public class RVContentEURAdapter extends RecyclerView.Adapter<RVContentEURAdapter.MyViewHolder> {
 
 
-    private Context mContext;
+    private Context context;
     private ArrayList<CurrencyModel> currencyList;
     private Intent webIntent;
 
 
     public RVContentEURAdapter(Context context, ArrayList<CurrencyModel> currencyList) {
-        this.mContext = context;
+        this.context = context;
         this.currencyList = currencyList;
     }
 
@@ -48,16 +48,16 @@ public class RVContentEURAdapter extends RecyclerView.Adapter<RVContentEURAdapte
         holder.btnSellvalue.setText(currencyModel.getEurSell() + "");
         holder.btnBuyValue.setText(currencyModel.getEurBuy() + "");
 
-        webIntent = new Intent(mContext, WebActivity.class);
+        webIntent = new Intent(context, WebActivity.class);
         holder.btnBankValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isConnectingToInternet(mContext)) {
+                if (isConnectingToInternet(context)) {
 
                     webIntent.putExtra("link", currencyModel.getRef());
-                    mContext.startActivity(webIntent);
+                    context.startActivity(webIntent);
                 } else {
-                    Toast.makeText(mContext, "please! check the internet connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "please! check the internet connection", Toast.LENGTH_SHORT).show();
                 }
             }
         });

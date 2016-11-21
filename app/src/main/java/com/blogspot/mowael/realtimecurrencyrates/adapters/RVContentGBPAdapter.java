@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,15 +46,14 @@ public class RVContentGBPAdapter extends RecyclerView.Adapter<RVContentGBPAdapte
         holder.btnBankValue.setText(currencyModel.getBankName());
         holder.btnBuyValue.setText(currencyModel.getGbpBuy() + "");
         holder.btnSellvalue.setText(currencyModel.getGbpSell() + "");
-
-        webIntent = new Intent(mContext, WebActivity.class);
+        final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currencyModel.getRef()));
+//        webIntent = new Intent(mContext, WebActivity.class);
         holder.btnBankValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isConnectingToInternet(mContext)) {
-
-                    webIntent.putExtra("link", currencyModel.getRef());
-                    mContext.startActivity(webIntent);
+//                    webIntent.putExtra("link", currencyModel.getRef());
+                    mContext.startActivity(browserIntent);
                 } else {
                     Toast.makeText(mContext, "please! check the internet connection", Toast.LENGTH_SHORT).show();
                 }

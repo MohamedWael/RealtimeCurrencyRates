@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +57,9 @@ public class DialogAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (isConnectingToInternet(context)) {
-                    intent.putExtra("link", "https://www.alash3al.xyz/");
-                    context.startActivity(intent);
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.alash3al.xyz/"));
+//                    intent.putExtra("link", "https://www.alash3al.xyz/");
+                    context.startActivity(browserIntent);
                 } else {
                     Toast.makeText(context, "please! check the internet connection", Toast.LENGTH_SHORT).show();
                 }

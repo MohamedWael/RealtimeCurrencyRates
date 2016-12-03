@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Created by moham on 11/18/2016.
  */
 
-public class RVContentSARAdapter extends RecyclerView.Adapter<RVContentSARAdapter.MyViewHolder> {
+public class RVContentSARAdapter extends RVContentAdapter {
 
 
     private Context context;
@@ -32,14 +32,9 @@ public class RVContentSARAdapter extends RecyclerView.Adapter<RVContentSARAdapte
 
 
     public RVContentSARAdapter(Context context, ArrayList<CurrencyModel> currencyList) {
+        super(context, currencyList);
         this.context = context;
         this.currencyList = currencyList;
-    }
-
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_bank, parent, false);
-        return new MyViewHolder(itemView);
     }
 
     @Override
@@ -62,29 +57,5 @@ public class RVContentSARAdapter extends RecyclerView.Adapter<RVContentSARAdapte
                 }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        Log.d("currencyList.size000", currencyList.size() + "");
-        return currencyList.size();
-    }
-
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        public Button btnBankValue, btnSellvalue, btnBuyValue;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            btnBankValue = (Button) itemView.findViewById(R.id.btnBankValue);
-            btnSellvalue = (Button) itemView.findViewById(R.id.btnSellvalue);
-            btnBuyValue = (Button) itemView.findViewById(R.id.btnBuyValue);
-        }
-    }
-
-    public boolean isConnectingToInternet(Context context) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

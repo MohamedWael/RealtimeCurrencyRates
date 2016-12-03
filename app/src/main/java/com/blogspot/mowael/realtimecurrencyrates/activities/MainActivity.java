@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.blogspot.mowael.realtimecurrencyrates.R;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.DialogAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.DotLoadlerDialogAdapter;

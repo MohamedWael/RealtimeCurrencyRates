@@ -1,83 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="5dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="5dp"
     tools:context="com.blogspot.mowael.realtimecurrencyrates.activities.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/activity_main"
+
+    <TextView
+        android:id="@+id/tvMainTitle"
+        style="@android:style/TextAppearance.DeviceDefault.Large"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/realtime_currency_rates"
+        android:textColor="@color/mainColor" />
 
-        <TextView
-            android:id="@+id/tvMainTitle"
-            style="@android:style/TextAppearance.DeviceDefault.Large"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/realtime_currency_rates"
-            android:textColor="@color/mainColor" />
+    <TextView
+        android:id="@+id/tvSubTitle"
+        style="@android:style/TextAppearance.DeviceDefault.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvMainTitle"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/simple_elegant_and_realtime" />
 
-        <TextView
-            android:id="@+id/tvSubTitle"
-            style="@android:style/TextAppearance.DeviceDefault.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tvMainTitle"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/simple_elegant_and_realtime" />
+    <FrameLayout
+        android:id="@+id/flCurrenciesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvSubTitle" />
 
-        <include
-            android:id="@+id/iUsd"
-            layout="@layout/content_usd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSubTitle"
-            android:layout_marginTop="20dp" />
-
-        <include
-            android:id="@+id/iEur"
-            layout="@layout/content_eur"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iUsd"
-            android:layout_marginTop="20dp" />
-
-        <include
-            android:id="@+id/iGbp"
-            layout="@layout/content_gbp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iEur"
-            android:layout_marginTop="20dp" />
-
-        <include
-            android:id="@+id/iSar"
-            layout="@layout/content_sar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iGbp"
-            android:layout_marginTop="20dp" />
-
-
-        <include
-            android:id="@+id/i_buttom_links_layout"
-            layout="@layout/buttom_links_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/iSar"
-            android:layout_marginTop="10dp" />
-
-
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

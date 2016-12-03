@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by moham on 11/18/2016.
+ * Created by mohamed wael on 11/18/2016.
  */
 
 public class CurrencyModel  {

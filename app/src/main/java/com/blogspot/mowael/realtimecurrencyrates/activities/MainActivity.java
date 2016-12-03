@@ -37,27 +37,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity /* implements NetworkStateReceiver.NetworkStateReceiverListener*/ {
-
-    private Button btnAuthor;
-    private final OkHttpClient client = new OkHttpClient();
-    private ArrayList<CurrencyModel> currencyList;
-    private RecyclerView rvBankEURDetailes, rvBankGBPDetailes, rvBankUSDDetailes;
-    private RVContentEURAdapter eurAdapter;
-    private RVContentGBPAdapter gbpAdapter;
-    private RVContentUSDAdapter usdAdapter;
-    private RVContentSARAdapter sarAdapter;
-    private DialogPlus dotLoaderDialog;
-    private RecyclerView rvBankSARDetailes;
-    private NetworkStateReceiver networkStateReceiver;
+public class MainActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        btnAuthor = (Button) findViewById(R.id.tvAuthor);
-
         CurrenciesFragment currenciesFragment = CurrenciesFragment.newInstance("", "");
         getSupportFragmentManager().beginTransaction().replace(R.id.flCurrenciesFragment, currenciesFragment).commit();
 

@@ -110,43 +110,22 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_currencies, container, false);
+        // Control whether a fragment instance is retained across Activity re-creation
+        // (such as from a configuration change). This can only be used with fragments not in the back stack.
+        setRetainInstance(true);
         currencyList = new ArrayList<>();
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         getActivity().registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         getAndPopulateData();
-
-
         return view;
     }
-
 
     @Override
     public void onResume() {
         super.onResume();
-        rvBankEURDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankEURDetailes);
-        rvBankGBPDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankGBPDetailes);
-        rvBankUSDDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankUSDDetailes);
-        rvBankSARDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankSARDetailes);
-        rvBankEURDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvBankGBPDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvBankUSDDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvBankSARDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
-        btnAuthor = (Button) getActivity().findViewById(R.id.tvAuthor);
-        btnAuthor.setOnClickListener(new View.OnClickListener() {
-            Intent webIntent = new Intent(getContext(), WebActivity.class);
-            DialogAdapter adapter = new DialogAdapter(getContext(), webIntent);
-
-            @Override
-            public void onClick(View view) {
-                DialogPlus dialog = DialogPlus.newDialog(getContext())
-                        .setAdapter(adapter).setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                        .create();
-                dialog.show();
-            }
-        });
+        initResources();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -248,6 +227,30 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
     @Override
     public void networkUnavailable() {
         Toast.makeText(getActivity(), "please! make sure that you are connected to the internet", Toast.LENGTH_LONG).show();
+    }
+
+    private void initResources() {
+        rvBankEURDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankEURDetailes);
+        rvBankGBPDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankGBPDetailes);
+        rvBankUSDDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankUSDDetailes);
+        rvBankSARDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankSARDetailes);
+        rvBankEURDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvBankGBPDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvBankUSDDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvBankSARDetailes.setLayoutManager(new LinearLayoutManager(getContext()));
+        btnAuthor = (Button) getActivity().findViewById(R.id.tvAuthor);
+        btnAuthor.setOnClickListener(new View.OnClickListener() {
+            Intent webIntent = new Intent(getContext(), WebActivity.class);
+            DialogAdapter adapter = new DialogAdapter(getContext(), webIntent);
+
+            @Override
+            public void onClick(View view) {
+                DialogPlus dialog = DialogPlus.newDialog(getContext())
+                        .setAdapter(adapter).setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                        .create();
+                dialog.show();
+            }
+        });
     }
 
     /**

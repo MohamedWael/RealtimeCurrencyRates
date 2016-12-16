@@ -8,19 +8,20 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.blogspot.mowael.realtimecurrencyrates.R;
-import com.blogspot.mowael.realtimecurrencyrates.activities.MainActivity;
 import com.blogspot.mowael.realtimecurrencyrates.activities.WebActivity;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.DialogAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.DotLoadlerDialogAdapter;
@@ -29,6 +30,7 @@ import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentGBPAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentSARAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.adapters.RVContentUSDAdapter;
 import com.blogspot.mowael.realtimecurrencyrates.models.CurrencyModel;
+import com.blogspot.mowael.realtimecurrencyrates.utilites.ChangeCurrencyListner;
 import com.blogspot.mowael.realtimecurrencyrates.utilites.NetworkStateReceiver;
 import com.orhanobut.dialogplus.DialogPlus;
 
@@ -36,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -50,7 +53,7 @@ import okhttp3.Response;
  * Use the {@link CurrenciesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CurrenciesFragment extends Fragment implements NetworkStateReceiver.NetworkStateReceiverListener {
+public class CurrenciesFragment extends Fragment implements NetworkStateReceiver.NetworkStateReceiverListener, ChangeCurrencyListner {
 
     private final OkHttpClient client = new OkHttpClient();
     private ArrayList<CurrencyModel> currencyList;
@@ -62,6 +65,7 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
     private DialogPlus dotLoaderDialog;
     private RecyclerView rvBankSARDetailes;
     private NetworkStateReceiver networkStateReceiver;
+    private EditText etChangeCurrency;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -126,6 +130,7 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
     public void onResume() {
         super.onResume();
         initResources();
+        changeCurrency();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -199,6 +204,10 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
                     gbpAdapter = new RVContentGBPAdapter(getActivity(), currencyList);
                     usdAdapter = new RVContentUSDAdapter(getActivity(), currencyList);
                     sarAdapter = new RVContentSARAdapter(getActivity(), currencyList);
+                    eurAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
+                    gbpAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
+                    usdAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
+                    sarAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
                     rvBankEURDetailes.setAdapter(eurAdapter);
                     rvBankGBPDetailes.setAdapter(gbpAdapter);
                     rvBankUSDDetailes.setAdapter(usdAdapter);
@@ -208,7 +217,6 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
 
         } else {
             getActivity().registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-//            Toast.makeText(this, "please! check the internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -226,10 +234,11 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
 
     @Override
     public void networkUnavailable() {
-        Toast.makeText(getActivity(), "please! make sure that you are connected to the internet", Toast.LENGTH_LONG).show();
+        toastMsg("please! make sure that you are connected to the internet");
     }
 
     private void initResources() {
+        etChangeCurrency = (EditText) getActivity().findViewById(R.id.etChangeCurrency);
         rvBankEURDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankEURDetailes);
         rvBankGBPDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankGBPDetailes);
         rvBankUSDDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankUSDDetailes);
@@ -251,6 +260,70 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
                 dialog.show();
             }
         });
+    }
+
+    private void changeCurrency() {
+        etChangeCurrency.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                new ChangeCurrencyListner() {
+                    @Override
+                    public void onChangeCurrencyListener(double currencySell, double currencyBuy, Button btnSellvalue, Button btnBuyValue) {
+
+                    }
+                };
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onChangeCurrencyListener(final double currencySell, final double currencyBuy, final Button btnSellvalue, final Button btnBuyValue) {
+        etChangeCurrency.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                btnSellvalue.setText(currencySell * 1 + "");
+                btnBuyValue.setText(currencySell * 1 + "");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    if (!etChangeCurrency.getText().equals("")) {
+                        double amount = Double.parseDouble(etChangeCurrency.getText().toString());
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        btnSellvalue.setText(format.format(currencySell * amount).toString());
+                        btnBuyValue.setText(format.format(currencyBuy * amount).toString());
+                    } else {
+                        btnSellvalue.setText(currencySell * 1 + "");
+                        btnBuyValue.setText(currencySell * 1 + "");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!isConnectingToInternet(getContext())) {
+                    toastMsg("please! make sure that you are connected to the internet");
+                }
+            }
+        });
+    }
+
+    private void toastMsg(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
     /**

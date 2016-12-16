@@ -43,7 +43,7 @@ public class RVContentSARAdapter extends RVContentAdapter {
         holder.btnBankValue.setText(currencyModel.getBankName());
         holder.btnSellvalue.setText(currencyModel.getSarSell() + "");
         holder.btnBuyValue.setText(currencyModel.getSarBuy() + "");
-
+        changeCurrencyListner.onChangeCurrencyListener(currencyModel.getSarSell(), currencyModel.getSarBuy(), holder.btnSellvalue, holder.btnBuyValue);
 //        webIntent = new Intent(context, WebActivity.class);
         final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currencyModel.getRef()));
         holder.btnBankValue.setOnClickListener(new View.OnClickListener() {

@@ -40,6 +40,7 @@ public class RVContentGBPAdapter extends RVContentAdapter {
         holder.btnBankValue.setText(currencyModel.getBankName());
         holder.btnBuyValue.setText(currencyModel.getGbpBuy() + "");
         holder.btnSellvalue.setText(currencyModel.getGbpSell() + "");
+        changeCurrencyListner.onChangeCurrencyListener(currencyModel.getGbpSell(), currencyModel.getGbpBuy(), holder.btnSellvalue, holder.btnBuyValue);
         final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currencyModel.getRef()));
 //        webIntent = new Intent(mContext, WebActivity.class);
         holder.btnBankValue.setOnClickListener(new View.OnClickListener() {

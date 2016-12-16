@@ -293,7 +293,7 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 btnSellvalue.setText(currencySell * 1 + "");
-                btnBuyValue.setText(currencySell * 1 + "");
+                btnBuyValue.setText(currencyBuy * 1 + "");
             }
 
             @Override

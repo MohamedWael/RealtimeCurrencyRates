@@ -41,7 +41,6 @@ public class RVContentUSDAdapter extends RVContentAdapter {
         holder.btnBankValue.setText(currencyModel.getBankName());
         holder.btnBuyValue.setText(currencyModel.getUsdBuy() + "");
         holder.btnSellvalue.setText(currencyModel.getUsdSell() + "");
-
         changeCurrencyListner.onChangeCurrencyListener(currencyModel.getUsdSell(), currencyModel.getUsdBuy(), holder.btnSellvalue, holder.btnBuyValue);
         final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currencyModel.getRef()));
 //        webIntent = new Intent(mContext, WebActivity.class);

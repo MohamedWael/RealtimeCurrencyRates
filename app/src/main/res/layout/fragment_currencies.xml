@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/svOrganizerContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.blogspot.mowael.realtimecurrencyrates.fragments.CurrenciesFragment">
@@ -9,13 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <EditText
+            android:id="@+id/etChangeCurrency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal|number"
+            android:maxLength="15"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:hint="@string/etChangeCurrencyHint" />
+
         <include
             android:id="@+id/iUsd"
             layout="@layout/content_usd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSubTitle"
-            android:layout_marginTop="10dp" />
+            android:layout_below="@+id/etChangeCurrency"
+            android:layout_marginTop="5dp" />
 
         <include
             android:id="@+id/iEur"

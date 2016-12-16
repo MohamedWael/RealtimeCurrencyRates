@@ -1,20 +1,17 @@
 package com.blogspot.mowael.realtimecurrencyrates.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.blogspot.mowael.realtimecurrencyrates.R;
 import com.blogspot.mowael.realtimecurrencyrates.models.CurrencyModel;
+import com.blogspot.mowael.realtimecurrencyrates.utilites.ChangeCurrencyListner;
 
 import java.util.ArrayList;
 
@@ -26,6 +23,7 @@ public abstract class RVContentAdapter extends RecyclerView.Adapter<RVContentAda
 
     private Context context;
     private ArrayList<CurrencyModel> currencyList;
+    protected ChangeCurrencyListner changeCurrencyListner;
 
     public RVContentAdapter(Context context, ArrayList<CurrencyModel> currencyList) {
         this.context = context;
@@ -52,6 +50,7 @@ public abstract class RVContentAdapter extends RecyclerView.Adapter<RVContentAda
             btnSellvalue = (Button) itemView.findViewById(R.id.btnSellvalue);
             btnBuyValue = (Button) itemView.findViewById(R.id.btnBuyValue);
         }
+
     }
 
     public boolean isConnectingToInternet(Context context) {
@@ -59,5 +58,9 @@ public abstract class RVContentAdapter extends RecyclerView.Adapter<RVContentAda
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void setChangeCurrencyListner(ChangeCurrencyListner changeCurrencyListner) {
+        this.changeCurrencyListner = changeCurrencyListner;
     }
 }

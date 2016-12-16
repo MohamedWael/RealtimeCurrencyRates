@@ -11,4 +11,5 @@
     <string name="gbp">الجنيه الإسترلينى</string>
     <string name="usd">الدولار الأمريكي</string>
     <string name="eur">اليورو</string>
+    <string name="etChangeCurrencyHint">إكتب المبلغ المراد تحويله</string>
 </resources>

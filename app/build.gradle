@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'currencyRates'
+            keyPassword 'c0c378648key'
+            storeFile file('C:/Program Files/Java/jre1.8.0_111/bin/keytool.exe')
+            storePassword 'C0c378648h'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
@@ -11,14 +19,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    productFlavors {
+        free {
+            applicationId "com.blogspot.mowael.realtimecurrencyrates.free"
+        }
+    }
 }
 
 dependencies {

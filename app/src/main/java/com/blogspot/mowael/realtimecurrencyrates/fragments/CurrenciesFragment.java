@@ -274,7 +274,6 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
                 new ChangeCurrencyListner() {
                     @Override
                     public void onChangeCurrencyListener(double currencySell, double currencyBuy, Button btnSellvalue, Button btnBuyValue) {
-
                     }
                 };
 

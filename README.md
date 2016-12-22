@@ -1,8 +1,8 @@
 # Realtime Currency Rates
 An android App that watches the changes in currency rates compared to egyptian pound through a [RESTful API](https://api.curates.club/) that is made by [@alash3al](https://github.com/alash3al) https://www.alash3al.xyz/
 
-[![Google padge](https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/google-play-badge2.png)] (https://goo.gl/iNY8vo)
-[![amazon padge](https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/amazon-underground-app-us-black.jpg)] (https://goo.gl/RkgTGn)
+[![Google padge](https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/Get_it_on_Google_play.svg.png)] (https://goo.gl/iNY8vo)
+  [![amazon padge](https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/amazon-underground-app-us-black.jpg)] (https://goo.gl/RkgTGn)
 
 Also you can get the latest APK [here] (https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/app-debug.apk)
 

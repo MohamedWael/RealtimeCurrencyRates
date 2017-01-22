@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "442025039324",
+    "firebase_url": "https://realtime-currency-rates.firebaseio.com",
+    "project_id": "realtime-currency-rates",
+    "storage_bucket": "realtime-currency-rates.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442025039324:android:916178d774319522",
+        "android_client_info": {
+          "package_name": "com.blogspot.mowael.realtimecurrencyrates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442025039324-vpq4h6v3bn0d4sknjlu3oaq2m2l8a10g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blogspot.mowael.realtimecurrencyrates",
+            "certificate_hash": "9F03B06708B1F8E922C163A35313B941BCD2D80C"
+          }
+        },
+        {
+          "client_id": "442025039324-m2ao018qg3d9krunjp6i985g09co6b8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZoWsMdunF8Rq0hcGYMVg08-H6dkSkk0A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442025039324-m2ao018qg3d9krunjp6i985g09co6b8m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

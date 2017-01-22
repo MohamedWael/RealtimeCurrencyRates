@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
         config {
-            keyAlias 'currencyRates'
+            keyAlias 'currencyRate'
             keyPassword 'c0c378648key'
             storeFile file('C:/Program Files/Java/jre1.8.0_111/bin/keytool.exe')
-            storePassword 'C0c378648h'
+            storePassword 'c0c378648'
         }
     }
     compileSdkVersion 25
@@ -16,10 +17,10 @@ android {
         applicationId "com.blogspot.mowael.realtimecurrencyrates"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionName 'ADAD'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
+        versionCode 3
     }
     buildTypes {
         release {
@@ -28,7 +29,13 @@ android {
     }
     productFlavors {
         free {
-            applicationId "com.blogspot.mowael.realtimecurrencyrates.free"
+            applicationId 'com.blogspot.mowael.realtimecurrencyrates'
+            minSdkVersion 14
+            signingConfig signingConfigs.config
+            targetSdkVersion 25
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionName 'ADAD'
+            versionCode 3
         }
     }
 }
@@ -46,6 +53,7 @@ dependencies {
     compile 'com.github.bhargavms:DotLoader:1.0.1'
     compile 'com.orhanobut:dialogplus:1.11@aar'
     compile 'com.dynamitechetan.flowinggradient:flowinggradient:1.1'
+    compile 'com.google.firebase:firebase-ads:10.0.1'
     compile 'com.android.support:support-v4:25.0.1'
     testCompile 'junit:junit:4.12'
 }

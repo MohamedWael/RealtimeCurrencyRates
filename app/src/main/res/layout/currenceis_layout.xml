@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/etChangeCurrency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:hint="@string/etChangeCurrencyHint"
+            android:inputType="numberDecimal|number"
+            android:maxLength="15" />
+
+        <include
+            android:id="@+id/iUsd"
+            layout="@layout/content_usd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etChangeCurrency"
+            android:layout_marginTop="5dp" />
+
+        <include
+            android:id="@+id/iEur"
+            layout="@layout/content_eur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iUsd"
+            android:layout_marginTop="20dp" />
+
+        <include
+            android:id="@+id/iGbp"
+            layout="@layout/content_gbp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iEur"
+            android:layout_marginTop="20dp" />
+
+        <include
+            android:id="@+id/iSar"
+            layout="@layout/content_sar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iGbp"
+            android:layout_marginTop="20dp" />
+
+        <include
+            android:id="@+id/i_buttom_links_layout"
+            layout="@layout/buttom_links_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/iSar" />
+
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

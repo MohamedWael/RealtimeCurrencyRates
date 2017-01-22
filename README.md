@@ -4,7 +4,7 @@ An android App that watches the changes in currency rates compared to egyptian p
 [![Google padge](https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/currency%20rates%20screens/stuff/google-play-badge2.png)] (https://goo.gl/iNY8vo)
   [![amazon padge](https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/currency%20rates%20screens/stuff/amazon-underground-app-us-black.jpg)] (https://goo.gl/RkgTGn)
 
-Also you can get the latest APK [here] (https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/app-debug.apk)
+Also you can get the latest APK [here] (https://github.com/MohamedWael/RealtimeCurrencyRates/blob/master/app/app-free-release.apk)
 
 Application screens
 ![screens](https://github.com/MohamedWael/RealtimeCurrencyRates/raw/master/currency%20rates%20screens/currency%20rates%20-%20Copy.png)

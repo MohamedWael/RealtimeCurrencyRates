@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -45,14 +45,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CurrenciesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CurrenciesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CurrenciesFragment extends Fragment implements NetworkStateReceiver.NetworkStateReceiverListener, ChangeCurrencyListner {
 
     private final OkHttpClient client = new OkHttpClient();
@@ -67,17 +60,17 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
     private NetworkStateReceiver networkStateReceiver;
     private EditText etChangeCurrency;
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
     private Button btnAuthor;
+    private Request request;
+    private Response response;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public CurrenciesFragment() {
         // Required empty public constructor
@@ -130,94 +123,85 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
     public void onResume() {
         super.onResume();
         initResources();
-        changeCurrency();
-    }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+            @Override
+            public void onRefresh() {
+                currencyList.clear();
+                requestData();
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-//            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     private void getAndPopulateData() {
         if (isConnectingToInternet(getContext())) {
             getActivity().unregisterReceiver(networkStateReceiver);
-            final Request request = new Request.Builder().url("https://api.curates.club/").build();
-            new AsyncTask<String, Void, ArrayList<CurrencyModel>>() {
-
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    DotLoadlerDialogAdapter dotLoaderAdapter = new DotLoadlerDialogAdapter(getActivity());
-                    dotLoaderDialog = DialogPlus.newDialog(getActivity())
-                            .setAdapter(dotLoaderAdapter).setExpanded(false).setGravity(Gravity.CENTER)  // This will enable the expand feature, (similar to android L share dialog)
-                            .create();
-                    dotLoaderDialog.show();
-                }
-
-                @Override
-                protected ArrayList<CurrencyModel> doInBackground(String... strings) {
-                    try {
-                        Response response = client.newCall(request).execute();
-                        String jsonResponse = response.body().string();
-                        JSONObject jsonObject = new JSONObject(jsonResponse);
-                        for (int i = 0; i < jsonObject.names().length(); i++) {
-                            String bankNamk = jsonObject.names().get(i).toString();
-                            JSONObject bankCurrencyRate = jsonObject.getJSONObject(bankNamk).getJSONObject("currency_rate");
-                            CurrencyModel currencyModel = new CurrencyModel(bankNamk.toUpperCase(), jsonObject.getJSONObject(bankNamk).get("ref").toString(), jsonObject.getJSONObject(bankNamk).get("title").toString(),
-                                    bankCurrencyRate.getJSONObject("eur").getDouble("sell"), bankCurrencyRate.getJSONObject("eur").getDouble("buy"),
-                                    bankCurrencyRate.getJSONObject("gbp").getDouble("sell"), bankCurrencyRate.getJSONObject("gbp").getDouble("buy"),
-                                    bankCurrencyRate.getJSONObject("usd").getDouble("sell"), bankCurrencyRate.getJSONObject("usd").getDouble("buy"),
-                                    bankCurrencyRate.getJSONObject("sar").getDouble("sell"), bankCurrencyRate.getJSONObject("sar").getDouble("buy"));
-                            currencyList.add(currencyModel);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    return currencyList;
-                }
-
-                @Override
-                protected void onPostExecute(ArrayList<CurrencyModel> currencyModels) {
-                    super.onPostExecute(currencyModels);
-                    dotLoaderDialog.dismiss();
-                    eurAdapter = new RVContentEURAdapter(getActivity(), currencyList);
-                    gbpAdapter = new RVContentGBPAdapter(getActivity(), currencyList);
-                    usdAdapter = new RVContentUSDAdapter(getActivity(), currencyList);
-                    sarAdapter = new RVContentSARAdapter(getActivity(), currencyList);
-                    eurAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
-                    gbpAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
-                    usdAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
-                    sarAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
-                    rvBankEURDetailes.setAdapter(eurAdapter);
-                    rvBankGBPDetailes.setAdapter(gbpAdapter);
-                    rvBankUSDDetailes.setAdapter(usdAdapter);
-                    rvBankSARDetailes.setAdapter(sarAdapter);
-                }
-            }.execute("");
-
+            requestData();
         } else {
             getActivity().registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         }
+    }
+
+    private void requestData() {
+        request = new Request.Builder().url("https://api.curates.club/").build();
+        new AsyncTask<String, Void, ArrayList<CurrencyModel>>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                DotLoadlerDialogAdapter dotLoaderAdapter = new DotLoadlerDialogAdapter(getActivity());
+                dotLoaderDialog = DialogPlus.newDialog(getActivity())
+                        .setAdapter(dotLoaderAdapter).setExpanded(false).setGravity(Gravity.CENTER)  // This will enable the expand feature, (similar to android L share dialog)
+                        .create();
+                dotLoaderDialog.show();
+            }
+
+            @Override
+            protected ArrayList<CurrencyModel> doInBackground(String... strings) {
+                try {
+                    response = client.newCall(request).execute();
+                    String jsonResponse = response.body().string();
+                    JSONObject jsonObject = new JSONObject(jsonResponse);
+                    for (int i = 0; i < jsonObject.names().length(); i++) {
+                        String bankNamk = jsonObject.names().get(i).toString();
+                        JSONObject bankCurrencyRate = jsonObject.getJSONObject(bankNamk).getJSONObject("currency_rate");
+                        CurrencyModel currencyModel = new CurrencyModel(bankNamk.toUpperCase(), jsonObject.getJSONObject(bankNamk).get("ref").toString(), jsonObject.getJSONObject(bankNamk).get("title").toString(),
+                                bankCurrencyRate.getJSONObject("eur").getDouble("sell"), bankCurrencyRate.getJSONObject("eur").getDouble("buy"),
+                                bankCurrencyRate.getJSONObject("gbp").getDouble("sell"), bankCurrencyRate.getJSONObject("gbp").getDouble("buy"),
+                                bankCurrencyRate.getJSONObject("usd").getDouble("sell"), bankCurrencyRate.getJSONObject("usd").getDouble("buy"),
+                                bankCurrencyRate.getJSONObject("sar").getDouble("sell"), bankCurrencyRate.getJSONObject("sar").getDouble("buy"));
+                        currencyList.add(currencyModel);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return currencyList;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<CurrencyModel> currencyModels) {
+                super.onPostExecute(currencyModels);
+                dotLoaderDialog.dismiss();
+                eurAdapter = new RVContentEURAdapter(getActivity(), currencyList);
+                gbpAdapter = new RVContentGBPAdapter(getActivity(), currencyList);
+                usdAdapter = new RVContentUSDAdapter(getActivity(), currencyList);
+                sarAdapter = new RVContentSARAdapter(getActivity(), currencyList);
+                pluginCurrencyChangeListener();
+                rvBankEURDetailes.setAdapter(eurAdapter);
+                rvBankGBPDetailes.setAdapter(gbpAdapter);
+                rvBankUSDDetailes.setAdapter(usdAdapter);
+                rvBankSARDetailes.setAdapter(sarAdapter);
+
+            }
+        }.execute("");
     }
 
     private boolean isConnectingToInternet(Context context) {
@@ -238,6 +222,7 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
     }
 
     private void initResources() {
+        swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshLayout);
         etChangeCurrency = (EditText) getActivity().findViewById(R.id.etChangeCurrency);
         rvBankEURDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankEURDetailes);
         rvBankGBPDetailes = (RecyclerView) getActivity().findViewById(R.id.rvBankGBPDetailes);
@@ -262,29 +247,11 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
         });
     }
 
-    private void changeCurrency() {
-        etChangeCurrency.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                new ChangeCurrencyListner() {
-                    @Override
-                    public void onChangeCurrencyListener(double currencySell, double currencyBuy, Button btnSellvalue, Button btnBuyValue) {
-
-                    }
-                };
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+    private void pluginCurrencyChangeListener() {
+        eurAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
+        gbpAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
+        usdAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
+        sarAdapter.setChangeCurrencyListner(CurrenciesFragment.this);
     }
 
     @Override
@@ -292,14 +259,25 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
         etChangeCurrency.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                btnSellvalue.setText(currencySell * 1 + "");
-                btnBuyValue.setText(currencyBuy * 1 + "");
+                try {
+                    if (!etChangeCurrency.getText().toString().equals("")) {
+                        double amount = Double.parseDouble(etChangeCurrency.getText().toString());
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        btnSellvalue.setText(format.format(currencySell * amount).toString());
+                        btnBuyValue.setText(format.format(currencyBuy * amount).toString());
+                    } else {
+                        btnSellvalue.setText(currencySell * 1 + "");
+                        btnBuyValue.setText(currencySell * 1 + "");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
-                    if (!etChangeCurrency.getText().equals("")) {
+                    if (!etChangeCurrency.getText().toString().equals("")) {
                         double amount = Double.parseDouble(etChangeCurrency.getText().toString());
                         DecimalFormat format = new DecimalFormat("0.00");
                         btnSellvalue.setText(format.format(currencySell * amount).toString());
@@ -324,20 +302,5 @@ public class CurrenciesFragment extends Fragment implements NetworkStateReceiver
 
     private void toastMsg(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

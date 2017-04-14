@@ -9,3 +9,10 @@
 .externalNativeBuild
 /_windows
 /inspection
+/other.xml
+/IntelliLang.xml
+/filetypes.xml
+/editor.codeinsight.xml
+/debugger.xml
+/gradle.run.settings.xml
+/RealtimeCurrencyRates.iml

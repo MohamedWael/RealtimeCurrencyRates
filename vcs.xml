@@ -14,6 +14,10 @@
           <option name="url" value="https://github.com/wordpress-mobile/WordPress-Android" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/Schinizer/RxUnfurl" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\moham\Desktop\temp" />

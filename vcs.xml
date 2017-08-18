@@ -38,6 +38,10 @@
           <option name="url" value="https://github.com/mozay/Android-SimpleAlarm-MVP" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/fanturbo/MultiLanguageDemo" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\moham\Desktop\temp" />

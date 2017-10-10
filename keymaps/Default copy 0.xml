@@ -1,5 +1,1 @@
-<keymap version="1" name="Default copy 0" parent="$default">
-  <action id="Gradle.ToggleOfflineAction">
-    <keyboard-shortcut first-keystroke="o" second-keystroke="m" />
-  </action>
-</keymap>
+<keymap version="1" name="Default copy 0" parent="$default" />
